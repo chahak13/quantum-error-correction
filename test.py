@@ -8,20 +8,20 @@
 '''
 from qiskit import QuantumCircuit, ClassicalRegister, QuantumRegister
 from qiskit import execute, Aer
-from qiskit.tools.visualization import circuit_drawer
+from qiskit.tools.visualization import circuit_drawer, matplotlib_circuit_drawer
 # Creates a Quantum Register with 2 qubits.
-q = QuantumRegister(2)
+q = QuantumRegister(1)
 
 # Creates a Classical Register with 2 bits.
-c = ClassicalRegister(2)
+c = ClassicalRegister(1)
 
 # Creates a Quantum Circuit using the quantum and classical registers.
 qc = QuantumCircuit(q, c)
 
 ## Performing some operations on the circuit.
 # Apply an H gate on the first qubit and putting this qubit in a superposition state.
-qc.h(q[0])
-
+# qc.h(q[0])
+# qc.cx(q[1])
 # Measuring the state of the system
 qc.measure(q, c)
 
@@ -33,8 +33,8 @@ qc.measure(q, c)
 # print(result_sim.get_counts(qc))
 
 # Provide a name to write the diagram to the filesystem
-circuit_drawer(qc, filename='./bell_circuit.png')
+# circuit_drawer(qc, filename='./bell_circuit.png')
 
 # Use the return value with show() to display the diagram
-diagram = circuit_drawer(qc)
+diagram = matplotlib_circuit_drawer(qc)
 diagram.show()
