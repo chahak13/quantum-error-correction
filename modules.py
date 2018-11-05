@@ -2,8 +2,9 @@ from qiskit import QuantumCircuit, QuantumRegister, ClassicalRegister
 from qiskit import Aer, execute
 from qiskit.tools.visualization import circuit_drawer
 import math
+import random
 
-def bitFlipError(stateVector = []):
+def bitFlipError(stateVector = [], error_probability = 0.2):
     '''
         Quantum circuit to detect single bit flip errors.
 
@@ -15,12 +16,19 @@ def bitFlipError(stateVector = []):
     qc = QuantumCircuit(q, c, name='bit_flip_circuit')
 
     # Brings the 3 qubit system to the state (a*|000> + b*|111>). a=b=1/sqrt(2)
-    qc.h(q[0])
+    if stateVector == []:
+        qc.h(q[0])
+    else:
+        desired_vector = stateVector
+        qc.initialize(desired_vector, [q[0]])
     qc.cx(q[0], q[1])
     qc.cx(q[0], q[2])
 
-    # Random bit flip error section.
-    qc.x(q[2])
+    # Random bit flip error with a probability of 0.2
+    ind = random.randint(0, 2)
+    if random.random() <= error_probability:
+        print("Bit number {} flipped due to noise".format(ind+1))
+        qc.x(q[ind])
 
     ancilla = QuantumRegister(2, name = 'a')
     classical_ancilla = ClassicalRegister(2, name = 'ca')
