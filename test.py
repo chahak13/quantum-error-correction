@@ -9,7 +9,7 @@
 from qiskit import QuantumCircuit, ClassicalRegister, QuantumRegister
 from qiskit import execute, Aer
 from qiskit.tools.visualization import circuit_drawer, matplotlib_circuit_drawer
-from modules import bitFlipError
+from modules import bitFlipError, phaseFlipError
 import math
 
 def test():
@@ -48,11 +48,35 @@ def test():
     diagram.show()
 
 def test_bitflip():
-    q, c, qc = bitFlipError(stateVector=[1/2, math.sqrt(3)/2], error_probability=0.8)
+    desired_state = [1/2, math.sqrt(3)/2]
+    q, c, qc = bitFlipError(stateVector=[], error_probability=0.8)
+    qc.measure(q,c)
+    backend_sim = Aer.get_backend('qasm_simulator')
+    job_sim = execute(qc, backend_sim)
+    result_sim = job_sim.result()
+
+    print("Measurement of decoded state:", result_sim)
+    print(result_sim.get_counts(qc))
     # diagram = matplotlib_circuit_drawer(qc, filename='bit_flip_circuit.png')
     # diagram.show()
     
+
+def test_phaseflip():
+    desired_state = [1/math.sqrt(2), 1/math.sqrt(2)]
+    q, c, qc = phaseFlipError(stateVector=desired_state, error_probability=0.8)
+    qc.measure(q, c)
+    backend_sim = Aer.get_backend('qasm_simulator')
+    job_sim = execute(qc, backend_sim)
+    result_sim = job_sim.result()
+
+    print("Measurement of decoded state:", result_sim)
+    print(result_sim.get_counts(qc))
+
+    # diagram = matplotlib_circuit_drawer(qc, filename='phase_flip_circuit.png')
+    # diagram.show()
+
 if __name__ == '__main__':
     
     # test()
-    test_bitflip()
+    # test_bitflip()
+    test_phaseflip()
