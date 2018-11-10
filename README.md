@@ -3,7 +3,8 @@
 This repository consists of implementations of Quantum Error Correction circuits that were implemented as a part of a course project. It uses the Qiskit package provided by IBM for Python to simulate the quantum circuits. Circuits for 1 qubit Bit Flip, Phase Flip and Shors code have been implemented.
 
 ## To install Qiskit
-> pip install qiskit
+
+`pip install qiskit`
 
 ## Testing
 
