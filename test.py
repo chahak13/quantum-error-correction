@@ -9,7 +9,7 @@
 from qiskit import QuantumCircuit, ClassicalRegister, QuantumRegister
 from qiskit import execute, Aer
 from qiskit.tools.visualization import circuit_drawer, matplotlib_circuit_drawer
-from modules import bitFlipError, phaseFlipError
+from modules import bitFlipError, phaseFlipError, shorsCode
 import math
 
 def test():
@@ -62,7 +62,8 @@ def test_bitflip():
     
 
 def test_phaseflip():
-    desired_state = [1/math.sqrt(2), 1/math.sqrt(2)]
+    # desired_state = [1/2, math.sqrt(3)/2]
+    desired_state = [1, 0]
     q, c, qc = phaseFlipError(stateVector=desired_state, error_probability=0.8)
     qc.measure(q, c)
     backend_sim = Aer.get_backend('qasm_simulator')
@@ -75,8 +76,23 @@ def test_phaseflip():
     # diagram = matplotlib_circuit_drawer(qc, filename='phase_flip_circuit.png')
     # diagram.show()
 
+def test_shorsCode():
+    # desired_state = [1/2, math.sqrt(3)/2]
+    desired_state = [1, 0]
+    q, c, qc = shorsCode(stateVector=desired_state, error_probability=0.8)
+    qc.measure(q, c)
+    backend_sim = Aer.get_backend('qasm_simulator')
+    job_sim = execute(qc, backend_sim)
+    result_sim = job_sim.result()
+
+    print("Measurement of decoded state:", result_sim)
+    print(result_sim.get_counts(qc))
+    # diagram = matplotlib_circuit_drawer(qc, filename='shors_code_circuit.png')
+    # diagram.show()
+
 if __name__ == '__main__':
     
     # test()
     # test_bitflip()
-    test_phaseflip()
+    # test_phaseflip()
+    test_shorsCode()

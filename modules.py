@@ -194,7 +194,6 @@ def shorsCode(stateVector = [], error_probability=0.8):
             qc.x(q[ind])
     else:
         print("No error")
-    # qc.h(q[1])
     print("Received noisy qubits. Correcting them.")
 
     qc.cx(q[0], q[1])
