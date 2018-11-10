@@ -10,7 +10,7 @@ This repository consists of implementations of Quantum Error Correction circuits
 
 To run the codes and test the circuits, simply provide a command line argument from `bitflip`, `phaseflip` or `shors` while running the `test.py`. The circuits implement random noise of its own too with a default error probability of `0.8` which can be changed by providing it as a command line argument. The user can also use the command line option `desiredState` to provide the amplitudes of `0` and `1` in the desired state. The default is a `0` state.
 
-```shell
+```
 usage: test.py [-h] --error {bitflip,phaseflip,shors}
                [--error_probability ERROR_PROBABILITY]
                [--desiredState DESIREDSTATE DESIREDSTATE]
