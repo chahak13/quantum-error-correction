@@ -11,6 +11,7 @@ from qiskit import execute, Aer
 from qiskit.tools.visualization import circuit_drawer, matplotlib_circuit_drawer
 from modules import bitFlipError, phaseFlipError, shorsCode
 import math
+import argparse
 
 def test():
     # Creates a Quantum Register with 2 qubits.
@@ -92,7 +93,16 @@ def test_shorsCode():
 
 if __name__ == '__main__':
     
-    # test()
-    # test_bitflip()
-    # test_phaseflip()
-    test_shorsCode()
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--error', required = True, type = str, choices = ['bitflip', 'phaseflip', 'shors'], help = "The type of error correction that is to be simulated.")
+    parser.add_argument('--error_probability', required = False, type = float, default = 0.8, help = "The probability of there being an error in the qubits while transmission.")
+    parser.add_argument('--desiredState', nargs = 2, type = float, help = "Amplitudes of the states 0 and 1 in the form of a list.")
+    args = parser.parse_args()
+    print(args)
+
+    if args.error == 'bitflip':
+        test_bitflip()
+    elif args.error == 'phaseflip':
+        test_phaseflip()
+    elif args.error == 'shors':
+        test_shorsCode()
